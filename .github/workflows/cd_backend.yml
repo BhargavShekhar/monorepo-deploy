@@ -1,0 +1,12 @@
+name: Backend Deploy
+
+on:
+    push:
+        branches:
+          - main
+
+jobs:
+  runs-on: ubuntu-latest
+  steps:
+    - name: build docker image
+    runs: docker build -t monorepo-backend -f ./docker/Dockerfile.backend .
