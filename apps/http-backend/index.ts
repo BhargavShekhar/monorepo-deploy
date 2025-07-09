@@ -5,10 +5,6 @@ const app = express();
 
 const PORT = 8080;
 
-app.get("/", (req, res) => {
-    res.json({ msg: "Hello World" })
-})
-
 app.post("/add-users", async (req, res) => {
     try {
         await prismaClinet.user.create({
