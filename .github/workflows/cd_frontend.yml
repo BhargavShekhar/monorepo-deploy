@@ -1,5 +1,4 @@
-name: Websocket Deploy
-
+name: Frontend Deploy
 on:
   push:
     branches:
@@ -24,6 +23,8 @@ jobs:
 
         with:
           context: .
-          file: ./docker/Dockerfile.websocket
+          file: ./docker/Dockerfile.frontend
+          build-args:
+            - DATABASE_URL=${{ secrets.DATABASE_URL }}
           push: true
-          tags: bhargavshekhar/monorepo-websocket:${{ github.sha }}
+          tags: bhargavshekhar/monorepo-frontend:${{ github.sha }}
