@@ -1,12 +1,24 @@
 name: Backend Deploy
-
 on:
     push:
         branches:
           - main
 
 jobs:
-  runs-on: ubuntu-latest
-  steps:
-    - name: build docker image
-    runs: docker build -t monorepo-backend -f ./docker/Dockerfile.backend .
+    build:
+        runs-on: ubuntu-latest
+        steps:
+          - name: Checkout the code
+            uses: actions/checkout@v2
+          - name: Docker login
+            uses: docker/login-action@v2
+            with:
+              username: ${{ secrets.DOCKERHUB_USERNAME }}
+              password: ${{ secrets.DOCKERHUB_TOKEN }}
+          - name: Build and Push # pushing to docker hub
+            uses: docker/build-push-action@v2
+            with:
+              context: .
+              file: ./docker/Dockerfile.backend
+              push: true
+              tags: bhargavshekhar/monorepo:${{ github.sha }}
