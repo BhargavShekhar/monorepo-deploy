@@ -24,7 +24,7 @@ jobs:
           tags: bhargavshekhar/monorepo-backend:${{ github.sha }}
       - name: Deploy to the VM
         run: |
-          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/ssh_key
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ssh_key
           chmod 600 ssh_key
           ssh -o StrictHostKeyChecking=no -i ~/ssh_key ubuntu@15.207.98.139 -t "
           docker pull bhargavshekhar/monorepo-backend:${{ github.sha }} &&
