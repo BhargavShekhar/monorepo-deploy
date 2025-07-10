@@ -22,3 +22,8 @@ jobs:
           file: ./docker/Dockerfile.backend
           push: true
           tags: bhargavshekhar/monorepo-backend:${{ github.sha }}
+      - name: Deploy to the VM
+        run: |
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" &> ~/ssh_key
+          chmod 700 /home/runner/ssh_key
+          ssh -o StrictHostKeyChecking=no -i ~/ssh_key ubuntu@15.207.98.139 -t "docker stop backend || true && docker rm backend || true && docker run -d --name backend -p 8080:8080 bhargavshekhar/monorepo-backend:${{ github.sha }}"
